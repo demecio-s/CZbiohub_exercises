@@ -4,7 +4,7 @@
 import matplotlib.pyplot as plt  # tool for plotting
 import tifffile as tiff
 import numpy as np
-import skimage as ski  # tool for image analysis, here used for segmentation and finding eccentricities 
+import skimage as ski  # tool for image analysis, here used for segmentation and finding eccentricities
 from scipy import ndimage  # tool used for image analysis, here used for segmentation
 from matplotlib import rc  # formatting figures
 rc('font', **{'size': 16})
@@ -67,7 +67,7 @@ with tiff.TiffFile('Assoc_RDEng_test.tif') as images:
                     # if obj%10 == 0:
                     #     print(f"{obj} object's eccentricity calculated!")
                     break
-                else: 
+                else:
                     continue
 
         # makes histograms for each page
