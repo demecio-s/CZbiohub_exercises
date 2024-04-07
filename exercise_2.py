@@ -60,4 +60,4 @@ def on_image_captured(data: np.ndarray, event: MDAEvent):
         print("700 pixel value at:", coords_spec)
 
 
-run = mmc.run_mda(seq, output=r"exercise_2_data.tiff")
+run = mmc.run_mda(seq, output=r"exercise_2_data.tif")
