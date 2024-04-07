@@ -35,39 +35,41 @@ with tiff.TiffFile('Assoc_RDEng_test.tif') as images:
         segment = ski.segmentation.watershed(elevation_map, edges)
 
         # removing small holes and getting edges of segmented image
-        segment = ndimage.binary_fill_holes(segment-1) 
+        segment = ndimage.binary_fill_holes(segment-1)
         nuclei_edges = ski.feature.canny(segment)
 
         # labeling and locating all nuclei 
         labels, num_features = ndimage.label(segment)
         nuclei = ndimage.find_objects(labels)
 
-        print(f"Succesfully segmented page {iter}!\n\n", 
+        print(f"Succesfully segmented page {iter}!\n\n",
               "Beginning eccentricity measurements")
 
         e = []  # initialize list for eccentricty values
 
-        # will iterate over all found objects (nuclei) 
+        # will iterate over all found objects (nuclei)
         for obj, nucleus in enumerate(nuclei, 1):
             # detect ellipsis and pick one with highest accumulator, nonzero major axes
-            ellipse = ski.transform.hough_ellipse(nuclei_edges[nucleus], accuracy=11)
-            if len(ellipse) == 0: 
+            ellipse = ski.transform.hough_ellipse(nuclei_edges[nucleus],
+                                                  accuracy=11
+                                                  )
+            if len(ellipse) == 0:
                 continue
 
             ellipse.sort(order='accumulator')
             # checks until you get highest accumulator with nonzero major/minor axes and eccentricity<1
-            for accum in range(len(ellipse)-1, 0, -1): 
+            for accum in range(len(ellipse)-1, 0, -1):
                 accumulator, y_cent, x_cent, maj_axis, min_axis, orientation = ellipse[accum]
-                if min_axis == np.float64(0) or maj_axis == np.float64(0): 
+                if min_axis == np.float64(0) or maj_axis == np.float64(0):
                     continue
                 elif eccentricity(maj_axis, min_axis) < 1:
                     e.append(eccentricity(maj_axis, min_axis))
                     # if obj%10 == 0:
-                    #     print(f"{obj} object's eccentricity calculated!")                  
+                    #     print(f"{obj} object's eccentricity calculated!")
                     break
                 else: 
                     continue
-        
+
         # makes histograms for each page
         plt.hist(e, bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
         plt.xlabel('Eccentricity')
@@ -79,8 +81,3 @@ with tiff.TiffFile('Assoc_RDEng_test.tif') as images:
         print(f"Page {iter} done!")
 
 print("All done!")
-
-        
-
-
-        
