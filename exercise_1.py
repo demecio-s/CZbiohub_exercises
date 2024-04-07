@@ -12,7 +12,12 @@ gridPlan = {"rows": 3, "columns": 3, "overlap": 0,
             "fov_width": 1500, 
             "fov_height": 1500
             }  # 3x3 grid with hopefully 500um space between spaces
-zslices = {"range": 1.1, "step": 0.1}  # 12 z-slices with 0.1um step size
+zSlices = {"range": 1.1, "step": 0.1}  # 12 z-slices with 0.1um step size
+metaData = {"channels": ch,
+            "z-slice step": zSlices["step"],
+            "fov": [gridPlan["fov_width"], gridPlan["fov_width"]],
+            "grid": [gridPlan["rows"], gridPlan["columns"]]
+            }
 
 # create an instance of micromanager core with the demo config
 mmc = CMMCorePlus.instance()
@@ -21,5 +26,5 @@ mmc.loadSystemConfiguration(
     )
 
 # define and run multidimensional acquisition
-seq = MDASequence(z_plan=zslices, channels=ch, grid_plan=gridPlan) 
-run = mmc.run_mda(seq, output=r"exercise_1_data.tiff")
+seq = MDASequence(z_plan=zSlices, channels=ch, grid_plan=gridPlan, metadata=metaData)
+run = mmc.run_mda(seq, output=r"exercise_1_data.tif")

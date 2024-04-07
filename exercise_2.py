@@ -16,13 +16,16 @@ mmc.setProperty("Camera", "Mode", "Noise")  # changes camera mode to noise
 # defining attributes for this acquisition
 ch = [{"config": "DAPI", "exposure": 10}]  # 10 ms exposure
 timePlan = {"interval": 0, "loops": 100}  # 100 time points
+metaData = {"channels": ch[0]["config"],
+            "time points": timePlan["loops"]
+            }
 
 # pixel value target and radius to set to zero
 target = 700
 radius = 15
 
 # def multi-dimensional acquisition
-seq = MDASequence(channels=ch, time_plan=timePlan)
+seq = MDASequence(channels=ch, time_plan=timePlan, metadata=metaData)
 
 # checks if pixel at (x, y) is located within radius centered at coords and sets to 0
 def check_radius(data: np.ndarray, coords: list):
