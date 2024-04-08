@@ -17,7 +17,7 @@ def eccentricity(maj_axis, min_axis):
     return np.sqrt(abs(maj_axis**2 - min_axis**2)) / maj_axis
 
 
-with tiff.TiffFile('Assoc_RDEng_test.tif') as images:
+with tiff.TiffFile(r'C:\Users\demez\Desktop\czbiohub_exercise\Assoc_RDEng_test.tif') as images:
     for iter, page in enumerate(images.pages, 1):
         image = page.asarray()
 
@@ -75,7 +75,7 @@ with tiff.TiffFile('Assoc_RDEng_test.tif') as images:
         plt.xlabel('Eccentricity')
         plt.ylabel('Nuclei count')
         plt.title(f"Eccentricities of nuclei in page {iter}")
-        plt.savefig(f"exercise_3_figs/page_{iter}_fig.png")
+        plt.savefig(f"exercise_3_plots/page_{iter}_fig.png")
         plt.close()
 
         print(f"Page {iter} done!")
