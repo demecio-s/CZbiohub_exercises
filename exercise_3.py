@@ -74,7 +74,7 @@ with tiff.TiffFile('Assoc_RDEng_test.tif') as images:
         plt.hist(e, bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
         plt.xlabel('Eccentricity')
         plt.ylabel('Nuclei count')
-        plt.title(f"Eccentriciities of nuclei in page {iter}")
+        plt.title(f"Eccentricities of nuclei in page {iter}")
         plt.savefig(f"exercise_3_figs/page_{iter}_fig.png")
         plt.close()
 
